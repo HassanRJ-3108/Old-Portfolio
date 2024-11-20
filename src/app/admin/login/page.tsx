@@ -1,4 +1,3 @@
-// app/admin/login/page.tsx
 'use client'
 
 import { signIn, useSession } from 'next-auth/react'
@@ -11,9 +10,13 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    console.log('Login page rendered')
+    console.log('Session status:', status)
     if (status === 'authenticated') {
+      console.log('User is authenticated, redirecting to /admin')
       router.push('/admin')
     }
   }, [status, router])
@@ -21,26 +24,40 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    const result = await signIn('credentials', {
-      redirect: false,
-      username,
-      password,
-    })
-    if (result?.error) {
-      setError('Invalid credentials')
+    setIsLoading(true)
+    console.log('Login attempt with username:', username)
+
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        username,
+        password,
+      })
+
+      console.log('SignIn result:', result)
+
+      if (result?.error) {
+        setError('Invalid credentials')
+      } else if (result?.ok) {
+        console.log('Login successful')
+        router.push('/admin')
+      } else {
+        setError('An unexpected error occurred')
+      }
+    } catch (err) {
+      console.error('Login error:', err)
+      setError('An error occurred during login')
+    } finally {
+      setIsLoading(false)
     }
   }
 
   if (status === 'loading') {
-    return <div>Loading...</div>
-  }
-
-  if (status === 'authenticated') {
-    return null
+    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>
   }
 
   return (
-    <div className=" min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-[#1A1A1A]">
       <form onSubmit={handleSubmit} className="bg-[#2A2A2A] p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-3xl font-bebas-neue mb-6 text-white">Admin Login</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -68,9 +85,10 @@ export default function Login() {
         </div>
         <button
           type="submit"
-          className="w-full bg-[#D3E97A] text-black font-manrope font-bold py-2 px-4 rounded hover:bg-[#C3D96A] transition duration-300"
+          className="w-full bg-[#D3E97A] text-black font-manrope font-bold py-2 px-4 rounded hover:bg-[#C3D96A] transition duration-300 disabled:opacity-50"
+          disabled={isLoading}
         >
-          Log In
+          {isLoading ? 'Logging in...' : 'Log In'}
         </button>
       </form>
     </div>
