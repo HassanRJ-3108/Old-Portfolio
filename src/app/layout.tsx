@@ -37,8 +37,8 @@ const bebasNeue = localFont({
 
 // Metadata for the page
 export const metadata: Metadata = {
-  title: "Portfolio - Assigment",
-  description: "Created portfolio website using figma",
+  title: "HassanRJ - Portfolio/CV",
+  description: "This is my Personal Full Stack Portfolio with an Amazing AI Assistant",
 };
 
 // Root Layout Component
