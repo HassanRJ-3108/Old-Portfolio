@@ -7,7 +7,7 @@ import ClientRootLayout from "./ClientRootLayout";
 import { ProjectProvider } from './contexts/ProjectContext'
 import { Toaster } from "@/components/ui/toaster"
 import Chatbot from "@/components/ChatBot";
-
+import { poppins } from "./ui/font";
 // Load your local fonts
 const manRope = localFont({
   src: "./fonts/manrope.ttf", // Manrope font file
@@ -47,7 +47,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   return (
     <html lang="en">
       <head>
@@ -56,13 +56,14 @@ export default function RootLayout({
         {/* Google Fonts can be included here if needed */}
       </head>
       <body
-        className={`${manRope.variable} ${geistSans.variable} ${geistMono.variable} ${inter.variable} ${bebasNeue.variable} antialiased`}
+        className={`${manRope.variable} ${geistSans.variable} ${geistMono.variable} ${inter.variable} ${bebasNeue.variable} ${poppins.className} antialiased`}
       >
         <ClientRootLayout>
           <ProjectProvider>
             <Navbar />
-            {children}
-
+            <main className="pt-16">
+              {children}
+            </main>
             <Toaster />
             <Footer />
           </ProjectProvider>
