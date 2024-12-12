@@ -37,9 +37,56 @@ const bebasNeue = localFont({
 
 // Metadata for the page
 export const metadata: Metadata = {
-  title: "HassanRJ - Portfolio/CV",
-  description: "This is my Personal Full Stack Portfolio with an Amazing AI Assistant",
-};
+  metadataBase: new URL('https://hassanrj.vercel.app'), // Replace with your actual domain
+  title: {
+    default: "HassanRJ - Full Stack Developer Portfolio",
+    template: "%s | HassanRJ"
+  },
+  description: "HassanRJ's personal full stack portfolio showcasing web development expertise and AI integration projects.",
+  applicationName: 'HassanRJ Portfolio',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['Full Stack', 'Web Development', 'AI', 'Portfolio', 'HassanRJ'],
+  authors: [{ name: 'HassanRJ' }],
+  creator: 'HassanRJ',
+  publisher: 'HassanRJ',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: 'HassanRJ - Full Stack Developer Portfolio',
+    description: "Explore HassanRJ's innovative web development projects and AI integrations.",
+    url: 'https://hassanrj.verel.app',
+    siteName: 'HassanRJ Portfolio',
+    images: [
+      {
+        url: '/images/pic.jpg', // Replace with your actual Open Graph image
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
+}
+
 
 // Root Layout Component
 export default function RootLayout({
